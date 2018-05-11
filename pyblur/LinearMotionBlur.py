@@ -7,10 +7,24 @@ from skimage.draw import line
 
 from LineDictionary import LineDictionary
 
-lineLengths =[3,5,7,9]
+lineLengths =[3,5,7,9,11,13,15]
 lineTypes = ["full", "right", "left"]
 
 lineDict = LineDictionary()
+
+def LinearMotionBlur_random_kernel():
+    lineLengthIdx = np.random.randint(0, len(lineLengths))
+    lineTypeIdx = np.random.randint(0, len(lineTypes))
+    lineLength = lineLengths[lineLengthIdx]
+    lineType = lineTypes[lineTypeIdx]
+    lineAngle = randomAngle(lineLength)
+    return LineKernel(lineLength, lineAngle, lineType)
+def LinearMotionByKernel(img,kernel):
+    imgarray = np.array(img, dtype="float32")
+    #kernel = LineKernel(dim, angle, linetype)
+    convolved = convolve2d(imgarray, kernel, mode='same', fillvalue=255.0).astype("uint8")
+    img = Image.fromarray(convolved)
+    return img
 
 def LinearMotionBlur_random(img):
     lineLengthIdx = np.random.randint(0, len(lineLengths))

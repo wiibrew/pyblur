@@ -4,7 +4,12 @@ class LineDictionary:
         self.Create3x3Lines()
         self.Create5x5Lines()
         self.Create7x7Lines()
-        self.Create9x9Lines()
+        #self.Create9x9Lines()
+        self.createNxNLines(9)
+        self.createNxNLines(11)
+        self.createNxNLines(13)
+        self.createNxNLines(15)
+        self.createNxNLines(17)
         return
     
     def Create3x3Lines(self):
@@ -66,3 +71,29 @@ class LineDictionary:
         lines[168.75] = [3,0,5,8]
         self.lines[9] = lines
         return
+
+    def createNxNLines(self,n):
+        lines={}
+        assert (n-1)%2==0,"n must be a odd number!!!" 
+        Num=2*n-2
+        angle_unit=180.0/Num
+        cnt=0
+        for i in range((n-1)/2,n):
+            j=0
+            lines[cnt*angle_unit]=[i, j, n-1-i, n-1-j]
+            cnt+=1
+        for j in range(1,(n+1)/2):
+            i=n-1
+            lines[cnt*angle_unit]=[i,j,n-1-i,n-1-j]
+            cnt+=1
+        for j in range((n+1)/2,n):
+            i=n-1
+            lines[cnt*angle_unit]=[n-1-i, n-1-j, i, j]
+            cnt+=1
+        for i in range(1, (n-1)/2):
+            j=0
+            lines[cnt*angle_unit]=[i,j,n-1-i,n-1-j]
+            cnt+=1
+        self.lines[n]=lines
+        return
+
